@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nikhil Khot — Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #f5f3ee;
+    font-family: 'DM Sans', sans-serif;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    text-decoration: none;
+  }
+  .nav-logo span { color: #3182ce; }
+  .nav-tag {
+    font-size: 12px;
+    color: #718096;
+    background: #edf2f7;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(99,179,237,0.08);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: rgba(251,211,141,0.07);
+  }
+  .hero-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3182ce, #667eea);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 auto 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 span { color: #fbd38d; }
+  .hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+  }
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+  }
+  .post-count {
+    font-size: 13px;
+    color: #a0aec0;
+    background: #edf2f7;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* FEATURED CARD */
+  .featured-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
+    border: 1px solid #e8ecf0;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .featured-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  }
+  .featured-banner {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .featured-banner::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: rgba(99,179,237,0.12);
+  }
+  .featured-label {
+    display: inline-block;
+    background: rgba(251,211,141,0.2);
+    border: 1px solid rgba(251,211,141,0.4);
+    color: #fbd38d;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .featured-title {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.35;
+    position: relative;
+    z-index: 1;
+  }
+  .featured-title span { color: #fbd38d; }
+  .featured-body {
+    padding: 1.5rem 2rem 2rem;
+  }
+  .featured-excerpt {
+    font-size: 15px;
+    color: #718096;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .card-tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+  .tag-blue { background: #ebf8ff; color: #2b6cb0; }
+  .tag-green { background: #f0fff4; color: #276749; }
+  .tag-purple { background: #faf5ff; color: #553c9a; }
+  .tag-orange { background: #fffaf0; color: #c05621; }
+
+  .card-read {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 500;
+    color: #3182ce;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-read::after { content: '→'; }
+
+  /* BLOG GRID */
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .blog-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e8ecf0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .blog-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+  }
+  .blog-card-icon {
+    font-size: 28px;
+    margin-bottom: 0.85rem;
+  }
+  .blog-card-title {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+  .blog-card-excerpt {
+    font-size: 13px;
+    color: #718096;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .coming-soon {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .coming-soon:hover {
+    transform: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .soon-badge {
+    display: inline-block;
+    background: #edf2f7;
+    color: #a0aec0;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #1a1a2e;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 2.5rem 1rem;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  footer strong { color: #fbd38d; font-weight: 500; }
+  footer a { color: #90cdf4; text-decoration: none; }
+
+  @media (max-width: 580px) {
+    .hero h1 { font-size: 26px; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .featured-title { font-size: 20px; }
+    nav { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Nikhil <span>Khot</span></a>
+  <span class="nav-tag">Blog & Insights</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-avatar">N</div>
+  <h1>Thoughts by <span>Nikhil Khot</span></h1>
+  <p>Writing about child psychology, learning, education, and everything in between — in plain, honest language.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">🧠 Psychology</span>
+    <span class="hero-tag">📚 Education</span>
+    <span class="hero-tag">👨‍👩‍👧 Parenting</span>
+    <span class="hero-tag">💡 Learning</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="section-header">
+    <h2 class="section-title">Latest Posts</h2>
+    <span class="post-count">1 post</span>
+  </div>
+
+  <!-- FEATURED POST -->
+  <a href="learning-styles.html" class="featured-card">
+    <div class="featured-banner">
+      <div class="featured-label">⭐ Featured Post</div>
+      <div class="featured-title">Your Child Isn't a Slow Learner.<br><span>The Method Might Just Be Wrong.</span></div>
+    </div>
+    <div class="featured-body">
+      <p class="featured-excerpt">Every child carries a natural learning style. Once you find it — visual, auditory, kinesthetic, or reading/writing — the difference in how they learn can feel almost magical.</p>
+      <div class="card-meta">
+        <span class="card-tag tag-blue">Child Development</span>
+        <span class="card-tag tag-green">Learning Styles</span>
+        <span class="card-tag tag-purple">Psychology</span>
+        <span class="card-read">Read article</span>
+      </div>
+    </div>
+  </a>
+
+  <!-- COMING SOON GRID -->
+  <!-- ============================================================
+  HOW TO ADD A NEW BLOG POST:
+  
+  STEP 1 — When a "coming soon" card is ready to publish:
+  Change this:
+    <div class="blog-card coming-soon">
+  To this:
+    <a href="your-new-file.html" class="blog-card">
+  And remove the <span class="soon-badge">Coming soon</span> line.
+  
+  STEP 2 — To add a brand new coming soon card, copy one block
+  below and paste it, changing the icon, title, and excerpt.
+  ============================================================ -->
+
+  <div class="section-header" style="margin-top: 2.5rem;">
+    <h2 class="section-title">Coming Soon</h2>
+  </div>
+
+  <div class="blog-grid">
+    <div class="blog-card coming-soon">
+      <div class="blog-card-icon">😰</div>
+      <div class="blog-card-title">Why Children Fear Exams — and How to Fix It</div>
+      <div class="blog-card-excerpt">The psychology behind exam anxiety and what parents can do before it becomes a bigger problem.</div>
+      <span class="soon-badge">Coming soon</span>
+    </div>
+    <div class="blog-card coming-soon">
+      <div class="blog-card-icon">📵</div>
+      <div class="blog-card-title">Screen Time vs Study Time — Finding the Balance</div>
+      <div class="blog-card-excerpt">A practical guide for parents navigating mobile phones, YouTube, and homework in the same household.</div>
+      <span class="soon-badge">Coming soon</span>
+    </div>
+    <div class="blog-card coming-soon">
+      <div class="blog-card-icon">🏆</div>
+      <div class="blog-card-title">The Comparison Trap — How It Silently Hurts Your Child</div>
+      <div class="blog-card-excerpt">Why comparing your child to others feels motivating but does the opposite — and what to say instead.</div>
+      <span class="soon-badge">Coming soon</span>
+    </div>
+    <div class="blog-card coming-soon">
+      <div class="blog-card-icon">🌙</div>
+      <div class="blog-card-title">Why Sleep Is the Most Underrated Study Tool</div>
+      <div class="blog-card-excerpt">What science says about sleep, memory, and why late-night cramming is working against your child.</div>
+      <span class="soon-badge">Coming soon</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Written with care for every parent trying to do better.</p>
+  <p style="margin-top: 0.5rem;">Made with ❤️ by <strong>Nikhil Khot</strong></p>
+</footer>
+
+</body>
+</html>
