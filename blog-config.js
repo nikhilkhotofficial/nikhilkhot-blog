@@ -78,7 +78,7 @@ const JSONBIN_CONFIG = {
 };
 
 // Admin email — only this person can open admin.html
-const ADMIN_EMAIL = "nikhilkhot@gmail.com"; // ← Change to YOUR email
+const ADMIN_EMAIL = "nikhilkhot085@gmail.com"; // ← Change to YOUR email
 
 // Firebase config (for Google login only — Firestore NOT used)
 const firebaseConfig = {
