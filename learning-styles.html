@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Child Isn't a Slow Learner — Nikhil Khot</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f3ee; --surface: #ffffff; --text: #1a1a1a;
+    --text-muted: #718096; --border: #e2e8f0; --accent: #3182ce;
+  }
+  body.dark {
+    --bg: #111827; --surface: #1f2937; --text: #f9fafb;
+    --text-muted: #9ca3af; --border: #374151; --accent: #60a5fa;
+  }
+
+  body {
+    background: var(--bg); font-family: 'DM Sans', sans-serif;
+    color: var(--text); min-height: 100vh; padding-bottom: 4rem;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* READING PROGRESS BAR */
+  #readingBar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #3182ce, #667eea);
+    width: 0%; z-index: 200; transition: width 0.1s;
+  }
+
+  nav {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; gap: 10px; flex-wrap: wrap;
+  }
+  .nav-logo { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; color: var(--text); text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  .nav-back { font-size: 13px; color: var(--accent); text-decoration: none; }
+  .nav-back::before { content: '← '; }
+  .btn-small {
+    background: none; border: 1px solid var(--border); border-radius: 20px;
+    padding: 5px 12px; font-size: 12px; cursor: pointer; color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  }
+  .btn-small:hover { border-color: var(--accent); color: var(--accent); }
+
+  .page { max-width: 720px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    border-radius: 20px; padding: 3rem 2.5rem 2.5rem; margin-bottom: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 250px; height: 250px; border-radius: 50%; background: rgba(99,179,237,0.15); }
+  .hero-pill { display: inline-block; background: rgba(99,179,237,0.2); color: #90cdf4; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 1.25rem; border: 1px solid rgba(99,179,237,0.3); }
+  .hero h1 { font-family: 'Lora', serif; font-size: 32px; font-weight: 600; line-height: 1.3; color: #fff; margin-bottom: 1rem; position: relative; z-index: 1; }
+  .hero h1 span { color: #fbd38d; }
+  .hero p { font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.7; position: relative; z-index: 1; }
+  .hero-meta { display: flex; align-items: center; gap: 14px; margin-top: 1.25rem; position: relative; z-index: 1; flex-wrap: wrap; }
+  .hero-author { display: flex; align-items: center; gap: 8px; }
+  .author-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #3182ce, #667eea); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #fff; font-family: 'Lora', serif; }
+  .author-name { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
+  .read-time { font-size: 12px; color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 20px; }
+
+  .post-actions { display: flex; align-items: center; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap; }
+  .btn-action {
+    display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 8px 14px; font-size: 13px; font-weight: 500; cursor: pointer;
+    color: var(--text-muted); font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  }
+  .btn-action:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-like.liked { background: #fff5f5; border-color: #feb2b2; color: #e53e3e; }
+
+  /* PROSE */
+  .prose { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; }
+  .prose strong { color: var(--text); font-weight: 500; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #a0aec0; margin-bottom: 1.25rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--border); }
+
+  /* LEARNER CARDS */
+  .learner-card { background: var(--surface); border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid var(--border); transition: transform 0.2s; }
+  .learner-card:hover { transform: translateY(-2px); }
+  .card-v { border-top: 3px solid #63b3ed; } .card-a { border-top: 3px solid #68d391; }
+  .card-k { border-top: 3px solid #f6ad55; } .card-r { border-top: 3px solid #b794f4; }
+  .learner-header { display: flex; align-items: center; gap: 14px; margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+  .learner-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .icon-v { background: linear-gradient(135deg,#ebf8ff,#bee3f8); } .icon-a { background: linear-gradient(135deg,#f0fff4,#9ae6b4); }
+  .icon-k { background: linear-gradient(135deg,#fffaf0,#fbd38d); } .icon-r { background: linear-gradient(135deg,#faf5ff,#d6bcfa); }
+  .learner-title { font-family: 'Lora', serif; font-size: 19px; font-weight: 600; color: var(--text); }
+  .learner-tagline { font-size: 13px; color: var(--text-muted); margin-top: 2px; font-style: italic; }
+  .three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+  .col-title { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .card-v .col-title { color: #3182ce; } .card-a .col-title { color: #38a169; }
+  .card-k .col-title { color: #d69e2e; } .card-r .col-title { color: #805ad5; }
+  .col-block ul { padding-left: 1rem; font-size: 13.5px; color: var(--text-muted); line-height: 1.7; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2.5rem 0; }
+
+  .insight-block { background: var(--surface); border-radius: 14px; padding: 1.4rem 1.5rem; margin-bottom: 1rem; border: 1px solid var(--border); display: flex; gap: 1rem; align-items: flex-start; }
+  .insight-num { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#667eea,#764ba2); color: #fff; font-size: 14px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .insight-q { font-family: 'Lora', serif; font-size: 15px; font-style: italic; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .insight-body { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  .experiment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.25rem 0; }
+  .exp-card { background: var(--surface); border-radius: 12px; padding: 1rem 1.15rem; border: 1px solid var(--border); }
+  .exp-method { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #3182ce; margin-bottom: 5px; }
+  .exp-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; }
+
+  .observe-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem; }
+  .observe-chip { background: var(--border); border-radius: 20px; padding: 5px 14px; font-size: 13px; color: var(--text-muted); }
+
+  .truth-card { background: var(--surface); border-left: 4px solid #3182ce; border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; margin-bottom: 1rem; border: 1px solid var(--border); }
+  .truth-headline { font-weight: 500; font-size: 16px; color: var(--text); margin-bottom: 5px; }
+  .truth-body { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+  .closing-quote { background: linear-gradient(135deg, #1a1a2e, #0f3460); border-radius: 16px; padding: 2.5rem 2rem; text-align: center; margin: 2.5rem 0; }
+  .closing-quote p { font-family: 'Lora', serif; font-size: 20px; font-style: italic; line-height: 1.6; color: #fff; }
+  .closing-quote span { color: #fbd38d; }
+
+  .back-home { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 18px; font-size: 14px; font-weight: 500; color: var(--accent); text-decoration: none; margin-top: 2rem; }
+  .back-home::before { content: '←'; }
+
+  .footer-note { text-align: center; font-size: 13px; color: #a0aec0; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+
+  /* CONFETTI */
+  .confetti-piece { position: fixed; width: 8px; height: 8px; pointer-events: none; z-index: 9999; animation: confettiFall 3s ease-in forwards; }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    background: #1a1a2e; color: #fff; padding: 10px 20px; border-radius: 12px;
+    font-size: 13px; z-index: 999; transition: opacity 0.3s; pointer-events: none;
+  }
+
+  /* SCROLL TO TOP */
+  #scrollTop { position: fixed; bottom: 2rem; right: 2rem; background: var(--accent); color: #fff; border: none; width: 42px; height: 42px; border-radius: 50%; font-size: 18px; cursor: pointer; display: none; align-items: center; justify-content: center; z-index: 99; }
+
+  @media (max-width: 580px) {
+    .hero h1 { font-size: 24px; } .three-cols { grid-template-columns: 1fr; }
+    .experiment-grid { grid-template-columns: 1fr; } .hero { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Nikhil <span>Khot</span></a>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html">All posts</a>
+    <button class="btn-small" onclick="toggleDark()">🌙</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="hero">
+    <div class="hero-pill">Child Development</div>
+    <h1>Your Child Isn't a Slow Learner.<br><span>The Method Might Just Be Wrong.</span></h1>
+    <p>Every child carries a natural learning style — a built-in way of absorbing the world. Once you find it, the difference can feel almost magical.</p>
+    <div class="hero-meta">
+      <div class="hero-author">
+        <div class="author-avatar">N</div>
+        <span class="author-name">Nikhil Khot</span>
+      </div>
+      <span class="read-time">⏱ ~6 min read</span>
+    </div>
+  </div>
+
+  <div class="post-actions">
+    <button class="btn-action btn-like" id="likeBtn" onclick="toggleLike()">
+      ❤️ <span id="likeCount">0</span> Likes
+    </button>
+    <button class="btn-action" onclick="copyLink()">
+      🔗 Copy Link
+    </button>
+  </div>
+
+  <p class="prose">
+    Think about the last time your child truly <strong>lit up</strong> while learning something. Maybe it was while watching a YouTube video, or when you let them take something apart and put it back together. That moment of genuine curiosity? That's not a coincidence. That's their natural learning style speaking.
+    <br><br>
+    There are four broadly recognized learning styles — and once you understand which one fits your child, the way you teach, revise, and support them can change completely.
+  </p>
+
+  <p class="section-label">The four learning styles</p>
+
+  <div class="learner-card card-v">
+    <div class="learner-header">
+      <div class="learner-icon icon-v">👁️</div>
+      <div><div class="learner-title">Visual Learner</div><div class="learner-tagline">Thinks in pictures. Sees before they believe.</div></div>
+    </div>
+    <div class="three-cols">
+      <div class="col-block"><div class="col-title">Learns through</div><ul><li>Diagrams & charts</li><li>Videos & demonstrations</li><li>Colors & patterns</li></ul></div>
+      <div class="col-block"><div class="col-title">Signs to look for</div><ul><li>Remembers faces easily</li><li>Loves drawing or watching</li><li>Says "I get it" after seeing</li></ul></div>
+      <div class="col-block"><div class="col-title">Best methods</div><ul><li>Mind maps</li><li>YouTube explanations</li><li>Infographics</li></ul></div>
+    </div>
+  </div>
+
+  <div class="learner-card card-a">
+    <div class="learner-header">
+      <div class="learner-icon icon-a">🎧</div>
+      <div><div class="learner-title">Auditory Learner</div><div class="learner-tagline">Listens, talks, and processes out loud.</div></div>
+    </div>
+    <div class="three-cols">
+      <div class="col-block"><div class="col-title">Learns through</div><ul><li>Listening</li><li>Discussion</li><li>Verbal explanation</li></ul></div>
+      <div class="col-block"><div class="col-title">Signs to look for</div><ul><li>Talks while studying</li><li>Remembers conversations</li><li>Asks verbal questions</li></ul></div>
+      <div class="col-block"><div class="col-title">Best methods</div><ul><li>Storytelling</li><li>Discussion-based</li><li>Audio lessons</li></ul></div>
+    </div>
+  </div>
+
+  <div class="learner-card card-k">
+    <div class="learner-header">
+      <div class="learner-icon icon-k">🤲</div>
+      <div><div class="learner-title">Kinesthetic (Hands-on) Learner</div><div class="learner-tagline">Learns by doing. Needs to feel it to believe it.</div></div>
+    </div>
+    <div class="three-cols">
+      <div class="col-block"><div class="col-title">Learns through</div><ul><li>Doing & movement</li><li>Experimentation</li><li>Physical interaction</li></ul></div>
+      <div class="col-block"><div class="col-title">Signs to look for</div><ul><li>Gets restless sitting long</li><li>Loves building & testing</li><li>Understands after trying</li></ul></div>
+      <div class="col-block"><div class="col-title">Best methods</div><ul><li>Projects & experiments</li><li>Practical activities</li><li>Science kits</li></ul></div>
+    </div>
+  </div>
+
+  <div class="learner-card card-r">
+    <div class="learner-header">
+      <div class="learner-icon icon-r">📖</div>
+      <div><div class="learner-title">Reading / Writing Learner</div><div class="learner-tagline">Finds clarity in words on a page.</div></div>
+    </div>
+    <div class="three-cols">
+      <div class="col-block"><div class="col-title">Learns through</div><ul><li>Notes & books</li><li>Writing repeatedly</li><li>Structured info</li></ul></div>
+      <div class="col-block"><div class="col-title">Signs to look for</div><ul><li>Loves making notes</li><li>Remembers after writing</li><li>Enjoys organized formats</li></ul></div>
+      <div class="col-block"><div class="col-title">Best methods</div><ul><li>Journaling</li><li>Worksheets</li><li>Structured reading</li></ul></div>
+    </div>
+  </div>
+
+  <hr>
+  <p class="section-label">The psychological observation every parent needs</p>
+  <p class="prose">Forget style quizzes. Just watch your child in action. These three questions will tell you more than any test ever could.</p>
+
+  <div class="insight-block">
+    <div class="insight-num">1</div>
+    <div><div class="insight-q">"Where does he lose attention?"</div><div class="insight-body">Disappearing attention is your first clue. If a child checks out fast, it's rarely about willpower — the method isn't speaking their language.</div></div>
+  </div>
+  <div class="insight-block">
+    <div class="insight-num">2</div>
+    <div><div class="insight-q">"Where does he become curious naturally?"</div><div class="insight-body">Curiosity doesn't lie. Wherever your child leans in — that's the channel that's working.</div></div>
+  </div>
+  <div class="insight-block">
+    <div class="insight-num">3</div>
+    <div><div class="insight-q">"In which method does he remember things longer?"</div><div class="insight-body">Fast understanding means nothing if the memory is gone by morning. The right method produces deeper, stickier learning.</div></div>
+  </div>
+
+  <hr>
+  <p class="section-label">The experiment parents can actually try</p>
+  <p class="prose">Pick one topic — say, the water cycle — and teach it four different ways over a week.</p>
+  <div class="experiment-grid">
+    <div class="exp-card"><div class="exp-method">Method 1 — Video</div><div class="exp-desc">Show an animated YouTube explanation. Watch whether they re-watch or zone out.</div></div>
+    <div class="exp-card"><div class="exp-method">Method 2 — Verbal</div><div class="exp-desc">Explain it out loud over dinner. See if they ask follow-ups.</div></div>
+    <div class="exp-card"><div class="exp-method">Method 3 — Hands-on</div><div class="exp-desc">Do a simple experiment with boiling water and condensation.</div></div>
+    <div class="exp-card"><div class="exp-method">Method 4 — Read & Write</div><div class="exp-desc">Give a paragraph to read. Ask them to summarize in their own words.</div></div>
+  </div>
+  <div class="observe-row">
+    <span class="observe-chip">⚡ Understanding speed</span>
+    <span class="observe-chip">😊 Excitement during</span>
+    <span class="observe-chip">🧠 Memory after 2 days</span>
+    <span class="observe-chip">💬 Confidence explaining</span>
+  </div>
+
+  <hr>
+  <p class="section-label">The truth most schools don't tell you</p>
+  <div class="truth-card"><div class="truth-headline">Children are rarely weak learners.</div><div class="truth-body">Teaching speed mismatches them. The method mismatches them. Pressure creates fear, and fear closes the learning mind.</div></div>
+  <div class="truth-card"><div class="truth-headline">A struggling child isn't a broken child.</div><div class="truth-body">They may be a kinesthetic learner trapped in a read-and-remember classroom. Change the method, and what looked like a limitation can quickly look like a gift.</div></div>
+
+  <div class="closing-quote">
+    <p>"A child who struggles in one system can become <span>exceptional</span> in another. That's why personalized education matters so much."</p>
+  </div>
+
+  <p class="prose">The goal isn't to label your child as one type and leave it there. Most children are a blend — with one dominant style. Stay curious about them, keep experimenting, and follow where their energy goes.</p>
+
+  <a href="index.html" class="back-home">Back to all posts</a>
+
+  <div class="footer-note">
+    Written with care for every parent trying to do better &nbsp;·&nbsp; Learning Styles Guide<br><br>
+    <span style="font-size:14px;color:var(--text-muted);font-weight:500;">✍️ Made by <span style="color:var(--accent);">Nikhil Khot</span></span>
+  </div>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script src="blog-config.js"></script>
+<script>
+const POST_ID = 'learning-styles';
+
+// ── Reading progress bar ──
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('readingBar');
+  const body = document.body, html = document.documentElement;
+  const scrollTop = window.scrollY;
+  const height = Math.max(body.scrollHeight, html.scrollHeight) - window.innerHeight;
+  bar.style.width = Math.min(100, (scrollTop / height) * 100) + '%';
+  document.getElementById('scrollTop').style.display = scrollTop > 300 ? 'flex' : 'none';
+});
+
+// ── Dark mode ──
+window.toggleDark = function() {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+};
+if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+// ── Copy link ──
+window.copyLink = function() {
+  navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied!'));
+};
+
+// ── Toast ──
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2000);
+}
+
+// ── Confetti ──
+function launchConfetti() {
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6beb','#ffa94d'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()*1}s;border-radius:${Math.random()>0.5?'50%':'2px'};`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+}
+
+// ── Likes (localStorage for now, JSONBin when configured) ──
+let likeCount = parseInt(localStorage.getItem('likes_' + POST_ID) || '0');
+let liked = localStorage.getItem('liked_' + POST_ID) === 'true';
+
+function updateLikeUI() {
+  document.getElementById('likeCount').textContent = likeCount;
+  document.getElementById('likeBtn').className = 'btn-action btn-like' + (liked ? ' liked' : '');
+}
+updateLikeUI();
+
+window.toggleLike = async function() {
+  if (!liked) {
+    liked = true; likeCount++;
+    launchConfetti();
+    showToast('❤️ Thanks for the love!');
+  } else {
+    liked = false; likeCount = Math.max(0, likeCount - 1);
+  }
+  localStorage.setItem('liked_' + POST_ID, liked);
+  localStorage.setItem('likes_' + POST_ID, likeCount);
+  updateLikeUI();
+
+  // Sync to JSONBin if configured
+  if (JSONBIN_CONFIG.apiKey && JSONBIN_CONFIG.apiKey !== 'YOUR_JSONBIN_API_KEY_HERE') {
+    try {
+      const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.likesBinId}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey }
+      });
+      const data = await res.json();
+      const record = data.record || {};
+      record[POST_ID] = (record[POST_ID] || 0) + (liked ? 1 : -1);
+      await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.likesBinId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_CONFIG.apiKey },
+        body: JSON.stringify(record)
+      });
+    } catch(e) {}
+  }
+};
+</script>
+</body>
+</html>

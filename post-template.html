@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ✏️ STEP 1: Change this title -->
+<title>YOUR POST TITLE — Nikhil Khot</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --bg:#f5f3ee;--surface:#ffffff;--text:#1a1a1a;--text-muted:#718096;--border:#e2e8f0;--accent:#3182ce; }
+  body.dark { --bg:#111827;--surface:#1f2937;--text:#f9fafb;--text-muted:#9ca3af;--border:#374151;--accent:#60a5fa; }
+  body { background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);min-height:100vh;padding-bottom:4rem;transition:background 0.3s,color 0.3s; }
+
+  #readingBar { position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#3182ce,#667eea);width:0%;z-index:200; }
+
+  nav { background:var(--surface);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;gap:10px; }
+  .nav-logo { font-family:'Lora',serif;font-size:20px;font-weight:600;color:var(--text);text-decoration:none; }
+  .nav-logo span { color:var(--accent); }
+  .nav-right { display:flex;align-items:center;gap:8px; }
+  .nav-back { font-size:13px;color:var(--accent);text-decoration:none; }
+  .nav-back::before { content:'← '; }
+  .btn-small { background:none;border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text-muted);font-family:'DM Sans',sans-serif; }
+
+  .page { max-width:720px;margin:0 auto;padding:2.5rem 1.5rem; }
+
+  .hero { background:linear-gradient(135deg,#1a1a2e 0%,#16213e 60%,#0f3460 100%);border-radius:20px;padding:3rem 2.5rem 2.5rem;margin-bottom:2.5rem;position:relative;overflow:hidden; }
+  .hero::before { content:'';position:absolute;top:-60px;right:-60px;width:250px;height:250px;border-radius:50%;background:rgba(99,179,237,0.15); }
+  .hero-pill { display:inline-block;background:rgba(99,179,237,0.2);color:#90cdf4;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:1.25rem;border:1px solid rgba(99,179,237,0.3); }
+  .hero h1 { font-family:'Lora',serif;font-size:32px;font-weight:600;line-height:1.3;color:#fff;margin-bottom:1rem;position:relative;z-index:1; }
+  .hero h1 span { color:#fbd38d; }
+  .hero p { font-size:16px;color:rgba(255,255,255,0.7);line-height:1.7;position:relative;z-index:1; }
+  .hero-meta { display:flex;align-items:center;gap:14px;margin-top:1.25rem;position:relative;z-index:1;flex-wrap:wrap; }
+  .hero-author { display:flex;align-items:center;gap:8px; }
+  .author-avatar { width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#3182ce,#667eea);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;font-family:'Lora',serif; }
+  .author-name { font-size:13px;color:rgba(255,255,255,0.8);font-weight:500; }
+  .read-time { font-size:12px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.1);padding:3px 10px;border-radius:20px; }
+
+  .post-actions { display:flex;align-items:center;gap:8px;margin-bottom:2rem; }
+  .btn-action { display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text-muted);font-family:'DM Sans',sans-serif;transition:all 0.2s; }
+  .btn-action:hover { border-color:var(--accent);color:var(--accent); }
+  .btn-like.liked { background:#fff5f5;border-color:#feb2b2;color:#e53e3e; }
+
+  .prose { font-size:16px;color:var(--text-muted);line-height:1.8;margin-bottom:2rem; }
+  .prose strong { color:var(--text);font-weight:500; }
+  .section-label { font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:#a0aec0;margin-bottom:1.25rem;padding-bottom:0.6rem;border-bottom:1px solid var(--border); }
+
+  /* Card block — use for key sections */
+  .info-card { background:var(--surface);border-radius:14px;padding:1.5rem;margin-bottom:1.25rem;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+  .info-card-title { font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--text);margin-bottom:0.75rem; }
+  .info-card-body { font-size:14px;color:var(--text-muted);line-height:1.7; }
+
+  /* Quote block */
+  .quote-block { background:linear-gradient(135deg,#1a1a2e,#0f3460);border-radius:16px;padding:2.5rem 2rem;text-align:center;margin:2.5rem 0; }
+  .quote-block p { font-family:'Lora',serif;font-size:20px;font-style:italic;line-height:1.6;color:#fff; }
+  .quote-block span { color:#fbd38d; }
+
+  hr { border:none;border-top:1px solid var(--border);margin:2.5rem 0; }
+
+  .back-home { display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 18px;font-size:14px;font-weight:500;color:var(--accent);text-decoration:none;margin-top:2rem; }
+  .back-home::before { content:'←'; }
+  .footer-note { text-align:center;font-size:13px;color:#a0aec0;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border); }
+
+  .confetti-piece { position:fixed;width:8px;height:8px;pointer-events:none;z-index:9999;animation:confettiFall 3s ease-in forwards; }
+  @keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
+  .toast { position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;z-index:999;transition:opacity 0.3s;pointer-events:none; }
+  #scrollTop { position:fixed;bottom:2rem;right:2rem;background:var(--accent);color:#fff;border:none;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:99; }
+
+  @media (max-width:580px) { .hero h1 { font-size:24px; } .hero { padding:2rem 1.5rem; } }
+</style>
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Nikhil <span>Khot</span></a>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html">All posts</a>
+    <button class="btn-small" onclick="toggleDark()">🌙</button>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ✏️ STEP 2: Fill in your hero section -->
+  <div class="hero">
+    <div class="hero-pill">YOUR CATEGORY HERE</div><!-- e.g. Parenting, Psychology, Education -->
+    <h1>Your Post Title Here.<br><span>Second Line in Yellow.</span></h1>
+    <p>A short, compelling intro sentence about what this post covers — keep it to 1–2 lines.</p>
+    <div class="hero-meta">
+      <div class="hero-author">
+        <div class="author-avatar">N</div>
+        <span class="author-name">Nikhil Khot</span>
+      </div>
+      <span class="read-time">⏱ ~5 min read</span><!-- Adjust read time -->
+    </div>
+  </div>
+
+  <div class="post-actions">
+    <button class="btn-action btn-like" id="likeBtn" onclick="toggleLike()">
+      ❤️ <span id="likeCount">0</span> Likes
+    </button>
+    <button class="btn-action" onclick="copyLink()">🔗 Copy Link</button>
+  </div>
+
+  <!-- ✏️ STEP 3: Write your article below -->
+  <!-- Use .prose for paragraphs, .section-label for section headers, .info-card for key points -->
+
+  <p class="prose">
+    Your opening paragraph goes here. Hook the reader. Make them feel understood.
+    <br><br>
+    Continue with the next paragraph. Keep sentences short and clear.
+  </p>
+
+  <p class="section-label">Your first section heading</p>
+
+  <div class="info-card">
+    <div class="info-card-title">Key Point Title</div>
+    <div class="info-card-body">
+      Explain this point in 2–3 sentences. Be practical. What should the parent actually do with this information?
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="info-card-title">Another Key Point</div>
+    <div class="info-card-body">
+      More explanation here. You can add as many of these cards as you need.
+    </div>
+  </div>
+
+  <hr>
+
+  <p class="section-label">Your second section heading</p>
+
+  <p class="prose">
+    More content here. Alternate between .prose paragraphs and .info-card blocks to break up the reading.
+  </p>
+
+  <div class="quote-block">
+    <p>"Your memorable quote or key takeaway from this article goes <span>here in yellow.</span>"</p>
+  </div>
+
+  <p class="prose">
+    Closing paragraph. Summarize what you want the reader to take away. End on a warm, encouraging note for parents.
+  </p>
+
+  <a href="index.html" class="back-home">Back to all posts</a>
+
+  <div class="footer-note">
+    Written with care for every parent trying to do better<br><br>
+    <span style="font-size:14px;color:var(--text-muted);font-weight:500;">✍️ Made by <span style="color:var(--accent);">Nikhil Khot</span></span>
+  </div>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ✏️ STEP 4: Change POST_ID to match the "id" in blog-config.js -->
+<script src="blog-config.js"></script>
+<script>
+const POST_ID = 'YOUR-POST-ID-HERE'; // ← must match the id in blog-config.js
+
+window.addEventListener('scroll', () => {
+  const bar = document.getElementById('readingBar');
+  const h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
+  bar.style.width = Math.min(100, (window.scrollY / h) * 100) + '%';
+  document.getElementById('scrollTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+});
+
+window.toggleDark = function() {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+};
+if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+window.copyLink = function() {
+  navigator.clipboard.writeText(window.location.href).then(() => showToast('Link copied!'));
+};
+function showToast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2000);
+}
+function launchConfetti() {
+  const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff6beb'];
+  for (let i = 0; i < 60; i++) {
+    const el = document.createElement('div'); el.className = 'confetti-piece';
+    el.style.cssText = `left:${Math.random()*100}vw;background:${colors[Math.floor(Math.random()*colors.length)]};animation-delay:${Math.random()}s;border-radius:${Math.random()>0.5?'50%':'2px'};`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+}
+
+let liked = localStorage.getItem('liked_' + POST_ID) === 'true';
+let likeCount = parseInt(localStorage.getItem('likes_' + POST_ID) || '0');
+function updateLikeUI() {
+  document.getElementById('likeCount').textContent = likeCount;
+  document.getElementById('likeBtn').className = 'btn-action btn-like' + (liked ? ' liked' : '');
+}
+updateLikeUI();
+
+window.toggleLike = function() {
+  if (!liked) { liked = true; likeCount++; launchConfetti(); showToast('❤️ Thanks for the love!'); }
+  else { liked = false; likeCount = Math.max(0, likeCount - 1); }
+  localStorage.setItem('liked_' + POST_ID, liked);
+  localStorage.setItem('likes_' + POST_ID, likeCount);
+  updateLikeUI();
+};
+</script>
+</body>
+</html>

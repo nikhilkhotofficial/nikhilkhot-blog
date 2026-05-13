@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Nikhil Khot Blog</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0f172a; font-family: 'DM Sans', sans-serif; color: #e2e8f0; min-height: 100vh; }
+
+  nav {
+    background: #1e293b; border-bottom: 1px solid #334155;
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Lora', serif; font-size: 18px; color: #f1f5f9; text-decoration: none; }
+  .nav-logo span { color: #60a5fa; }
+  .nav-badge { background: #7c3aed; color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+
+  .page { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  .page-title { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 0.5rem; }
+  .page-sub { color: #94a3b8; font-size: 14px; margin-bottom: 2.5rem; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .stat-card {
+    background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 1.5rem;
+    text-align: center; transition: transform 0.2s;
+  }
+  .stat-card:hover { transform: translateY(-2px); }
+  .stat-icon { font-size: 28px; margin-bottom: 0.75rem; }
+  .stat-num { font-family: 'Lora', serif; font-size: 32px; font-weight: 600; color: #f1f5f9; }
+  .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+
+  .section { margin-bottom: 2rem; }
+  .section-title { font-family: 'Lora', serif; font-size: 18px; margin-bottom: 1.25rem; color: #cbd5e1; }
+
+  .post-row {
+    background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+    padding: 1.1rem 1.5rem; margin-bottom: 0.75rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .post-row-title { font-size: 14px; font-weight: 500; color: #f1f5f9; }
+  .post-row-meta { font-size: 12px; color: #64748b; margin-top: 3px; }
+  .post-stat { text-align: right; font-size: 13px; color: #94a3b8; }
+  .live-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; animation: pulse 1.5s infinite; margin-right: 6px; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.3} }
+
+  .coming-badge { background: #374151; color: #9ca3af; font-size: 11px; padding: 2px 10px; border-radius: 20px; }
+  .live-badge { background: #166534; color: #86efac; font-size: 11px; padding: 2px 10px; border-radius: 20px; }
+
+  .blocked { display: none; }
+  .blocked.show {
+    display: flex; align-items: center; justify-content: center; min-height: 80vh;
+    text-align: center; flex-direction: column; gap: 1rem;
+  }
+  .blocked-icon { font-size: 48px; }
+  .blocked-title { font-family: 'Lora', serif; font-size: 24px; }
+  .blocked-sub { color: #64748b; font-size: 14px; }
+
+  .refresh-btn {
+    background: #1e40af; color: #fff; border: none; border-radius: 10px;
+    padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+  }
+  .refresh-btn:hover { background: #1d4ed8; }
+
+  .note-box {
+    background: #1e293b; border: 1px solid #334155; border-left: 3px solid #60a5fa;
+    border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; font-size: 13px;
+    color: #94a3b8; line-height: 1.6; margin-bottom: 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-num { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="blockedView" class="blocked show">
+  <div class="blocked-icon">🔒</div>
+  <div class="blocked-title">Admin Only</div>
+  <div class="blocked-sub">Checking authentication...</div>
+</div>
+
+<div id="adminContent" style="display:none;">
+  <nav>
+    <a href="index.html" class="nav-logo">Nikhil <span>Khot</span></a>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="nav-badge">Admin Panel</span>
+      <button class="refresh-btn" onclick="loadData()">↻ Refresh</button>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="page-title">Dashboard</div>
+    <p class="page-sub">Your blog at a glance — <span id="adminEmail" style="color:#60a5fa;"></span></p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👀</div>
+        <div class="stat-num" id="totalVisitors">—</div>
+        <div class="stat-label">Total Visitors</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-num" id="publishedCount">—</div>
+        <div class="stat-label">Posts Published</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🕐</div>
+        <div class="stat-num" id="comingCount">—</div>
+        <div class="stat-label">Coming Soon</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">❤️</div>
+        <div class="stat-num" id="totalLikes">—</div>
+        <div class="stat-label">Total Likes</div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong style="color:#93c5fd;">💡 Visitor count</strong> is stored in JSONBin. Once you set up your JSONBin API key in blog-config.js, all numbers will appear here automatically.
+    </div>
+
+    <div class="section">
+      <div class="section-title">📚 All Posts</div>
+      <div id="postList"></div>
+    </div>
+  </div>
+</div>
+
+<script src="blog-config.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, user => {
+    const blocked = document.getElementById('blockedView');
+    const content = document.getElementById('adminContent');
+
+    if (!user) {
+      blocked.querySelector('.blocked-sub').textContent = 'Please log in first.';
+      blocked.innerHTML += `<a href="login.html" style="color:#60a5fa;font-size:14px;">→ Go to Login</a>`;
+      return;
+    }
+
+    if (user.email !== ADMIN_EMAIL) {
+      blocked.querySelector('.blocked-sub').textContent = `Access denied for ${user.email}`;
+      return;
+    }
+
+    blocked.classList.remove('show');
+    content.style.display = '';
+    document.getElementById('adminEmail').textContent = user.email;
+
+    renderPosts();
+    window.loadData = loadData;
+    loadData();
+  });
+
+  function renderPosts() {
+    const published = BLOG_POSTS.filter(p => !p.comingSoon);
+    const coming = BLOG_POSTS.filter(p => p.comingSoon);
+    document.getElementById('publishedCount').textContent = published.length;
+    document.getElementById('comingCount').textContent = coming.length;
+
+    const list = document.getElementById('postList');
+    list.innerHTML = BLOG_POSTS.map(p => `
+      <div class="post-row">
+        <div>
+          <div class="post-row-title">${p.icon} ${p.title}</div>
+          <div class="post-row-meta">${p.tags.join(' · ')} ${p.date ? '· ' + p.date : ''}</div>
+        </div>
+        <div class="post-stat">
+          <span class="${p.comingSoon ? 'coming-badge' : 'live-badge'}">${p.comingSoon ? 'Coming soon' : 'Live'}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  async function loadData() {
+    if (!JSONBIN_CONFIG.apiKey || JSONBIN_CONFIG.apiKey === 'YOUR_JSONBIN_API_KEY_HERE') {
+      document.getElementById('totalVisitors').textContent = 'Setup needed';
+      document.getElementById('totalLikes').textContent = 'Setup needed';
+      return;
+    }
+    try {
+      const vRes = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.visitorsBinId}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey }
+      });
+      const vData = await vRes.json();
+      document.getElementById('totalVisitors').textContent = (vData.record?.visitors || 0).toLocaleString();
+
+      const lRes = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.likesBinId}/latest`, {
+        headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey }
+      });
+      const lData = await lRes.json();
+      const totalLikes = Object.values(lData.record || {}).reduce((a, b) => a + (b || 0), 0);
+      document.getElementById('totalLikes').textContent = totalLikes;
+    } catch(e) {
+      console.error(e);
+    }
+  }
+</script>
+</body>
+</html>
