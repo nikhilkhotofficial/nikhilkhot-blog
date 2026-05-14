@@ -267,6 +267,7 @@
       <span id="visitorCount">...</span> readers
     </div>
     <button class="btn-nav" onclick="toggleDark()" id="themeBtn">🌙 Dark</button>
+    <button class="btn-nav" onclick="openReadingList()" id="readingListBtn">🔖 Reading List <span id="readingListCount" style="display:none;background:var(--accent);color:#fff;border-radius:20px;padding:1px 6px;font-size:10px;margin-left:2px"></span></button>
     <a href="login.html" class="btn-nav" id="authBtn">Login</a>
   </div>
 </nav>
@@ -300,6 +301,18 @@
 </div>
 
 <button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- READING LIST MODAL -->
+<div id="readingListOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:2rem;max-width:520px;width:92%;max-height:80vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.4)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem">
+      <div style="font-family:'Lora',serif;font-size:19px;font-weight:600;color:var(--text)">🔖 Your Reading List</div>
+      <button onclick="closeReadingList()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);line-height:1">×</button>
+    </div>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:1.2rem">Posts you've saved from your device. Log in to sync across devices.</p>
+    <div id="readingListItems"></div>
+  </div>
+</div>
 
 <footer>
   <p>Written with care for every parent trying to do better.</p>
@@ -492,6 +505,50 @@ async function showVisitorCount() {
     document.getElementById('visitorCount').textContent = '—';
   }
 }
+// ── READING LIST ──────────────────────────────────────────
+function getBookmarks() {
+  try { return JSON.parse(localStorage.getItem('nk_bookmarks') || '[]'); } catch(e) { return []; }
+}
+function updateReadingListBadge() {
+  const count = getBookmarks().length;
+  const badge = document.getElementById('readingListCount');
+  if (!badge) return;
+  if (count > 0) { badge.textContent = count; badge.style.display = 'inline'; }
+  else { badge.style.display = 'none'; }
+}
+window.openReadingList = function() {
+  const items = getBookmarks();
+  const el = document.getElementById('readingListItems');
+  if (items.length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:2rem 0;color:var(--text-muted);font-size:14px">No saved posts yet.<br><br>Tap 🔖 on any post to save it here.</div>';
+  } else {
+    el.innerHTML = items.map(b => `
+      <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <div style="flex:1;min-width:0">
+          <a href="${b.url}" style="font-size:14px;font-weight:500;color:var(--text);text-decoration:none;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.title}</a>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Saved ${b.saved || ''}</div>
+        </div>
+        <button onclick="removeBookmark('${b.id}')" style="background:none;border:none;font-size:16px;cursor:pointer;color:var(--text-muted);flex-shrink:0" title="Remove">×</button>
+      </div>`).join('');
+  }
+  document.getElementById('readingListOverlay').style.display = 'flex';
+};
+window.closeReadingList = function() {
+  document.getElementById('readingListOverlay').style.display = 'none';
+};
+window.removeBookmark = function(id) {
+  let bms = getBookmarks().filter(b => b.id !== id);
+  localStorage.setItem('nk_bookmarks', JSON.stringify(bms));
+  updateReadingListBadge();
+  window.openReadingList(); // re-render
+};
+// Close on overlay click
+document.getElementById('readingListOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeReadingList();
+});
+updateReadingListBadge();
+// Refresh badge when storage changes (e.g. bookmark added from another tab)
+window.addEventListener('storage', updateReadingListBadge);
 </script>
 </body>
 </html>
