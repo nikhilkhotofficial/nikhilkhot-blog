@@ -6,69 +6,101 @@
 <title>Admin — Nikhil Khot Blog</title>
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #0f172a; font-family: 'DM Sans', sans-serif; color: #e2e8f0; min-height: 100vh; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f172a;font-family:'DM Sans',sans-serif;color:#e2e8f0;min-height:100vh}
 
-  nav {
-    background: #1e293b; border-bottom: 1px solid #334155;
-    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
-  }
-  .nav-logo { font-family: 'Lora', serif; font-size: 18px; color: #f1f5f9; text-decoration: none; }
-  .nav-logo span { color: #60a5fa; }
-  .nav-badge { background: #7c3aed; color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 20px; }
+nav{background:#1e293b;border-bottom:1px solid #334155;padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Lora',serif;font-size:18px;color:#f1f5f9;text-decoration:none}.nav-logo span{color:#60a5fa}
+.nav-badge{background:#7c3aed;color:#fff;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
+.btn{border:none;border-radius:8px;padding:7px 16px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;text-decoration:none;display:inline-flex;align-items:center;gap:5px}
+.btn-blue{background:#1e40af;color:#fff}.btn-blue:hover{background:#1d4ed8}
+.btn-green{background:#166534;color:#86efac;border:1px solid #16a34a}.btn-green:hover{background:#15803d}
+.btn-yellow{background:#854d0e;color:#fde68a;border:1px solid #a16207}.btn-yellow:hover{background:#713f12}
+.btn-red{background:#7f1d1d;color:#fca5a5;border:1px solid #b91c1c}.btn-red:hover{background:#991b1b}
+.btn-ghost{background:transparent;color:#94a3b8;border:1px solid #334155}.btn-ghost:hover{background:#1e293b;color:#f1f5f9}
+.btn-sm{padding:4px 12px;font-size:12px}
 
-  .btn { border: none; border-radius: 10px; padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; }
-  .btn-blue { background: #1e40af; color: #fff; }
-  .btn-blue:hover { background: #1d4ed8; }
-  .btn-ghost { background: transparent; color: #94a3b8; border: 1px solid #334155; }
-  .btn-ghost:hover { background: #1e293b; color: #f1f5f9; }
+.page{max-width:1060px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.page-title{font-family:'Lora',serif;font-size:26px;margin-bottom:.3rem}
+.page-sub{color:#94a3b8;font-size:14px;margin-bottom:2.5rem}
 
-  .page { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-  .page-title { font-family: 'Lora', serif; font-size: 28px; margin-bottom: 0.5rem; }
-  .page-sub { color: #94a3b8; font-size: 14px; margin-bottom: 2.5rem; }
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+.stat-card{background:#1e293b;border:1px solid #334155;border-radius:14px;padding:1.4rem;text-align:center;transition:transform .2s}
+.stat-card:hover{transform:translateY(-2px)}
+.stat-icon{font-size:26px;margin-bottom:.6rem}
+.stat-num{font-family:'Lora',serif;font-size:30px;font-weight:600;color:#f1f5f9}
+.stat-label{font-size:12px;color:#64748b;margin-top:3px}
 
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
-  .stat-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 1.5rem; text-align: center; transition: transform 0.2s; }
-  .stat-card:hover { transform: translateY(-2px); }
-  .stat-icon { font-size: 28px; margin-bottom: 0.75rem; }
-  .stat-num { font-family: 'Lora', serif; font-size: 32px; font-weight: 600; color: #f1f5f9; }
-  .stat-label { font-size: 12px; color: #64748b; margin-top: 4px; }
+/* SECTIONS */
+.section{margin-bottom:2.5rem}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.sec-title{font-family:'Lora',serif;font-size:18px;color:#cbd5e1;display:flex;align-items:center;gap:8px}
+.note-box{background:#1e293b;border:1px solid #334155;border-left:3px solid #60a5fa;border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:13px;color:#94a3b8;line-height:1.6;margin-bottom:1.2rem}
 
-  .section { margin-bottom: 2.5rem; }
-  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 8px; }
-  .section-title { font-family: 'Lora', serif; font-size: 18px; color: #cbd5e1; }
+/* USERS TABLE */
+.users-wrap{background:#1e293b;border:1px solid #334155;border-radius:14px;overflow:hidden}
+.users-scroll{max-height:520px;overflow-y:auto}
+.users-scroll::-webkit-scrollbar{width:6px}
+.users-scroll::-webkit-scrollbar-track{background:#0f172a}
+.users-scroll::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+table{width:100%;border-collapse:collapse}
+th{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#64748b;padding:11px 16px;text-align:left;border-bottom:1px solid #334155;position:sticky;top:0;background:#1e293b;z-index:2}
+td{font-size:13px;color:#e2e8f0;padding:11px 16px;border-bottom:1px solid #172033}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#172033}
+.uav{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;margin-right:8px;vertical-align:middle;flex-shrink:0}
+.pbadge{font-size:10px;padding:2px 8px;border-radius:20px}
+.pb-g{background:#1e3a5f;color:#93c5fd}
+.pb-e{background:#1a2e1a;color:#86efac}
+.cbtn{background:#334155;border:none;border-radius:6px;padding:3px 10px;font-size:11px;color:#94a3b8;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.cbtn:hover{background:#475569;color:#f1f5f9}
 
-  .post-row { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.1rem 1.5rem; margin-bottom: 0.75rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-  .post-row-title { font-size: 14px; font-weight: 500; color: #f1f5f9; }
-  .post-row-meta { font-size: 12px; color: #64748b; margin-top: 3px; }
-  .coming-badge { background: #374151; color: #9ca3af; font-size: 11px; padding: 2px 10px; border-radius: 20px; }
-  .live-badge { background: #166534; color: #86efac; font-size: 11px; padding: 2px 10px; border-radius: 20px; }
+/* POSTS */
+.post-row{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.post-row-left{flex:1;min-width:200px}
+.post-row-title{font-size:14px;font-weight:500;color:#f1f5f9;margin-bottom:3px}
+.post-row-meta{font-size:12px;color:#64748b}
+.post-row-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge-soon{background:#374151;color:#9ca3af;font-size:11px;padding:3px 10px;border-radius:20px}
+.badge-live{background:#166534;color:#86efac;font-size:11px;padding:3px 10px;border-radius:20px}
 
-  .users-table-wrap { overflow-x: auto; background: #1e293b; border: 1px solid #334155; border-radius: 12px; }
-  .users-table { width: 100%; border-collapse: collapse; }
-  .users-table th { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b; padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; }
-  .users-table td { font-size: 13px; color: #e2e8f0; padding: 12px 16px; border-bottom: 1px solid #172033; }
-  .users-table tr:last-child td { border-bottom: none; }
-  .users-table tr:hover td { background: #172033; }
-  .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #fff; margin-right: 10px; vertical-align: middle; flex-shrink: 0; }
-  .provider-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; }
-  .provider-google { background: #1e3a5f; color: #93c5fd; }
-  .provider-email { background: #1a2e1a; color: #86efac; }
-  .copy-btn { background: #334155; border: none; border-radius: 6px; padding: 3px 10px; font-size: 11px; color: #94a3b8; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-  .copy-btn:hover { background: #475569; color: #f1f5f9; }
+/* CREATE BLOG MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.overlay.show{display:flex}
+.modal{background:#1e293b;border:1px solid #334155;border-radius:20px;padding:2.5rem;max-width:560px;width:92%;max-height:90vh;overflow-y:auto}
+.modal h2{font-family:'Lora',serif;font-size:22px;margin-bottom:.4rem;color:#f1f5f9}
+.modal .sub{font-size:14px;color:#64748b;margin-bottom:1.8rem}
+.field{margin-bottom:1.2rem}
+.field label{display:block;font-size:13px;font-weight:500;color:#94a3b8;margin-bottom:.45rem}
+.field input,.field textarea,.field select{width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;padding:10px 14px;font-size:14px;color:#f1f5f9;outline:none;font-family:'DM Sans',sans-serif;transition:.2s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:#3b82f6}
+.field textarea{min-height:90px;resize:vertical}
+.hint{font-size:12px;color:#475569;margin-top:.35rem}
+.modal-btns{display:flex;gap:10px;margin-top:1.5rem}
+.modal-btns .btn{flex:1;justify-content:center;padding:11px}
 
-  .empty-state { text-align: center; padding: 3rem; color: #64748b; font-size: 14px; background: #1e293b; border: 1px solid #334155; border-radius: 12px; }
-  .loading-state { padding: 2rem; color: #64748b; font-size: 13px; text-align: center; background: #1e293b; border: 1px solid #334155; border-radius: 12px; }
+/* EDIT MODAL */
+.edit-tag{display:inline-flex;align-items:center;gap:4px;background:#334155;color:#cbd5e1;font-size:12px;padding:3px 10px;border-radius:20px;margin:3px}
+.edit-tag button{background:none;border:none;color:#94a3b8;cursor:pointer;font-size:12px;padding:0;line-height:1}
+.edit-tag button:hover{color:#f87171}
+.tag-input-row{display:flex;gap:8px;margin-top:.5rem}
+.tag-input-row input{flex:1}
+.tag-input-row button{flex-shrink:0}
 
-  .note-box { background: #1e293b; border: 1px solid #334155; border-left: 3px solid #60a5fa; border-radius: 0 12px 12px 0; padding: 1rem 1.25rem; font-size: 13px; color: #94a3b8; line-height: 1.6; margin-bottom: 1.25rem; }
+/* BLOCKED */
+.blocked{display:none}.blocked.show{display:flex;align-items:center;justify-content:center;min-height:80vh;text-align:center;flex-direction:column;gap:1rem}
+.blocked-icon{font-size:48px}
+.blocked-title{font-family:'Lora',serif;font-size:24px}
+.blocked-sub{color:#64748b;font-size:14px}
 
-  .blocked { display: none; }
-  .blocked.show { display: flex; align-items: center; justify-content: center; min-height: 80vh; text-align: center; flex-direction: column; gap: 1rem; }
-  .blocked-icon { font-size: 48px; }
-  .blocked-title { font-family: 'Lora', serif; font-size: 24px; }
-  .blocked-sub { color: #64748b; font-size: 14px; }
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(60px);background:#1e293b;border:1px solid #334155;color:#f1f5f9;padding:11px 22px;border-radius:12px;font-size:14px;z-index:999;transition:.3s;opacity:0;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-  @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr 1fr; } .stat-num { font-size: 24px; } }
+.empty{text-align:center;padding:2.5rem;color:#64748b;font-size:14px}
+
+@media(max-width:640px){.stats-grid{grid-template-columns:1fr 1fr}.stat-num{font-size:24px}nav{padding:.9rem 1rem}}
 </style>
 </head>
 <body>
@@ -76,184 +108,448 @@
 <div id="blockedView" class="blocked show">
   <div class="blocked-icon">🔒</div>
   <div class="blocked-title">Admin Only</div>
-  <div class="blocked-sub">Checking authentication...</div>
+  <div class="blocked-sub">Checking authentication…</div>
 </div>
 
-<div id="adminContent" style="display:none;">
+<div id="adminContent" style="display:none">
   <nav>
     <a href="index.html" class="nav-logo">Nikhil <span>Khot</span></a>
-    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <span class="nav-badge">Admin Panel</span>
-      <button class="btn btn-blue" onclick="loadData()">↻ Refresh</button>
-      <a href="index.html" class="btn btn-ghost">← Back to Blog</a>
+      <button class="btn btn-blue" id="refreshBtn" onclick="refreshAll()">↻ Refresh</button>
     </div>
   </nav>
 
   <div class="page">
     <div class="page-title">Dashboard</div>
-    <p class="page-sub">Logged in as admin — <span id="adminEmail" style="color:#60a5fa;"></span></p>
+    <p class="page-sub">Logged in as admin — <span id="adminEmail" style="color:#60a5fa"></span></p>
 
     <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon">👀</div>
-        <div class="stat-num" id="totalVisitors">—</div>
-        <div class="stat-label">Total Readers</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">👤</div>
-        <div class="stat-num" id="totalUsers">—</div>
-        <div class="stat-label">Registered Users</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">📝</div>
-        <div class="stat-num" id="publishedCount">—</div>
-        <div class="stat-label">Posts Live</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon">❤️</div>
-        <div class="stat-num" id="totalLikes">—</div>
-        <div class="stat-label">Total Likes</div>
-      </div>
+      <div class="stat-card"><div class="stat-icon">👀</div><div class="stat-num" id="totalVisitors">—</div><div class="stat-label">Total Readers</div></div>
+      <div class="stat-card"><div class="stat-icon">👤</div><div class="stat-num" id="totalUsers">—</div><div class="stat-label">Registered Users</div></div>
+      <div class="stat-card"><div class="stat-icon">📝</div><div class="stat-num" id="publishedCount">—</div><div class="stat-label">Posts Live</div></div>
+      <div class="stat-card"><div class="stat-icon">❤️</div><div class="stat-num" id="totalLikes">—</div><div class="stat-label">Total Likes</div></div>
     </div>
 
     <!-- USERS SECTION -->
     <div class="section">
-      <div class="section-header">
-        <div class="section-title">👥 Registered Users & Emails</div>
-        <button class="btn btn-ghost" onclick="copyAllEmails()" style="font-size:12px;padding:6px 14px;">📋 Copy all emails</button>
+      <div class="sec-hdr">
+        <div class="sec-title">👥 Registered Users & Emails</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" onclick="copyAllEmails()">📋 Copy all emails</button>
+          <button class="btn btn-green btn-sm" onclick="exportToCSV()">⬇️ Export to Excel/CSV</button>
+        </div>
       </div>
       <div class="note-box">
-        <strong style="color:#93c5fd;">How to use:</strong> Every person who signs up on your blog is saved here automatically. Click "Copy" next to any email, or "Copy all emails" to get everyone's email at once — perfect for sending course suggestions.
+        <strong style="color:#93c5fd">How to use:</strong> Every person who signs up is saved here automatically. <b>Export to Excel/CSV</b> downloads a file you can open in Excel or Google Sheets with names + emails + dates.
       </div>
-      <div id="usersList" class="loading-state">Loading users...</div>
+      <div id="usersList" class="empty">Loading users…</div>
     </div>
 
     <!-- POSTS SECTION -->
     <div class="section">
-      <div class="section-title">📚 All Posts</div>
+      <div class="sec-hdr">
+        <div class="sec-title">📚 All Posts</div>
+        <button class="btn btn-blue btn-sm" onclick="openCreateModal()">✏️ Create New Blog</button>
+      </div>
       <div id="postList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CREATE BLOG MODAL -->
+<div class="overlay" id="createModal">
+  <div class="modal">
+    <h2>✏️ Create New Blog Post</h2>
+    <p class="sub">Fill in the details. It will appear as "Coming Soon" on the homepage immediately. When your HTML file is ready and uploaded, click Publish to make it live.</p>
+    <div class="field">
+      <label>Post Title *</label>
+      <input type="text" id="c-title" placeholder="e.g. Why Children Fear Exams">
+    </div>
+    <div class="field">
+      <label>Short Excerpt *</label>
+      <textarea id="c-excerpt" placeholder="1-2 sentence description shown on homepage…"></textarea>
+    </div>
+    <div class="field">
+      <label>Icon (emoji)</label>
+      <input type="text" id="c-icon" placeholder="😰" maxlength="4" style="width:80px">
+    </div>
+    <div class="field">
+      <label>HTML Filename *</label>
+      <input type="text" id="c-file" placeholder="exam-fear.html">
+      <div class="hint">This is the file you'll upload to GitHub. Use lowercase, no spaces. e.g. exam-fear.html</div>
+    </div>
+    <div class="field">
+      <label>Tags (add one at a time)</label>
+      <div id="c-tags-list" style="margin-bottom:6px"></div>
+      <div class="tag-input-row">
+        <input type="text" id="c-tag-inp" placeholder="e.g. Psychology" onkeydown="if(event.key==='Enter'){addCTag();event.preventDefault()}">
+        <button class="btn btn-ghost btn-sm" onclick="addCTag()">+ Add</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Estimated Read Time</label>
+      <input type="text" id="c-readtime" placeholder="5 min read">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-green" onclick="submitCreateBlog()">✅ Add to Coming Soon</button>
+      <button class="btn btn-ghost" onclick="closeModal('createModal')">Cancel</button>
     </div>
   </div>
 </div>
 
+<!-- EDIT BLOG MODAL -->
+<div class="overlay" id="editModal">
+  <div class="modal">
+    <h2>✏️ Edit Blog Post</h2>
+    <p class="sub">Update any details for this post. Changes apply immediately on the homepage.</p>
+    <input type="hidden" id="e-id">
+    <div class="field">
+      <label>Post Title</label>
+      <input type="text" id="e-title">
+    </div>
+    <div class="field">
+      <label>Short Excerpt</label>
+      <textarea id="e-excerpt"></textarea>
+    </div>
+    <div class="field">
+      <label>Icon (emoji)</label>
+      <input type="text" id="e-icon" maxlength="4" style="width:80px">
+    </div>
+    <div class="field">
+      <label>HTML Filename</label>
+      <input type="text" id="e-file">
+    </div>
+    <div class="field">
+      <label>Tags</label>
+      <div id="e-tags-list" style="margin-bottom:6px"></div>
+      <div class="tag-input-row">
+        <input type="text" id="e-tag-inp" placeholder="Add tag…" onkeydown="if(event.key==='Enter'){addETag();event.preventDefault()}">
+        <button class="btn btn-ghost btn-sm" onclick="addETag()">+ Add</button>
+      </div>
+    </div>
+    <div class="field">
+      <label>Estimated Read Time</label>
+      <input type="text" id="e-readtime">
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-blue" onclick="submitEditBlog()">💾 Save Changes</button>
+      <button class="btn btn-ghost" onclick="closeModal('editModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script src="blog-config.js"></script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  let allUsers = [];
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+let allUsers=[];
+let localPosts=[...BLOG_POSTS]; // working copy
 
-  onAuthStateChanged(auth, user => {
-    const blocked = document.getElementById('blockedView');
-    const content = document.getElementById('adminContent');
-
-    if (!user) {
-      blocked.querySelector('.blocked-sub').textContent = 'Please log in first.';
-      blocked.innerHTML += `<a href="login.html" style="color:#60a5fa;font-size:14px;margin-top:8px;display:block;">→ Go to Login</a>`;
-      return;
-    }
-    if (user.email !== ADMIN_EMAIL) {
-      blocked.querySelector('.blocked-sub').textContent = `Access denied for ${user.email}`;
-      blocked.innerHTML += `<a href="index.html" style="color:#60a5fa;font-size:14px;margin-top:8px;display:block;">← Back to Blog</a>`;
-      return;
-    }
-
-    blocked.classList.remove('show');
-    content.style.display = '';
-    document.getElementById('adminEmail').textContent = user.email;
-
-    renderPosts();
-    window.loadData = loadData;
-    loadData();
-    loadUsers();
-  });
-
-  function renderPosts() {
-    const published = BLOG_POSTS.filter(p => !p.comingSoon);
-    document.getElementById('publishedCount').textContent = published.length;
-    document.getElementById('postList').innerHTML = BLOG_POSTS.map(p => `
-      <div class="post-row">
-        <div>
-          <div class="post-row-title">${p.icon} ${p.title}</div>
-          <div class="post-row-meta">${p.tags.join(' · ')}${p.date ? ' · ' + p.date : ''}</div>
-        </div>
-        <span class="${p.comingSoon ? 'coming-badge' : 'live-badge'}">${p.comingSoon ? 'Coming soon' : 'Live'}</span>
-      </div>`).join('');
+// ── AUTH CHECK ──────────────────────────────────────────
+onAuthStateChanged(auth,user=>{
+  const blocked=document.getElementById('blockedView');
+  const content=document.getElementById('adminContent');
+  if(!user){
+    blocked.querySelector('.blocked-sub').textContent='Please log in first.';
+    blocked.innerHTML+=`<a href="login.html" style="color:#60a5fa;font-size:14px;margin-top:8px;display:block;">→ Go to Login</a>`;
+    return;
   }
-
-  // Read-only — admin visits never increment the counter
-  async function loadData() {
-    if (!JSONBIN_CONFIG.apiKey || JSONBIN_CONFIG.apiKey === 'YOUR_JSONBIN_API_KEY_HERE') {
-      document.getElementById('totalVisitors').textContent = 'Setup';
-      document.getElementById('totalLikes').textContent = 'Setup';
-      return;
-    }
-    try {
-      const vRes = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.visitorsBinId}/latest`, { headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey } });
-      const vData = await vRes.json();
-      document.getElementById('totalVisitors').textContent = (vData.record?.visitors || 0).toLocaleString();
-
-      const lRes = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.likesBinId}/latest`, { headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey } });
-      const lData = await lRes.json();
-      document.getElementById('totalLikes').textContent = Object.values(lData.record || {}).reduce((a, b) => a + (b || 0), 0);
-    } catch(e) { console.error(e); }
+  if(user.email!==ADMIN_EMAIL){
+    blocked.querySelector('.blocked-sub').textContent=`Access denied for ${user.email}`;
+    blocked.innerHTML+=`<a href="index.html" style="color:#60a5fa;font-size:14px;margin-top:8px;display:block;">← Back to Blog</a>`;
+    return;
   }
+  blocked.classList.remove('show');
+  content.style.display='';
+  document.getElementById('adminEmail').textContent=user.email;
+  renderPosts();
+  loadStats();
+  loadUsers();
+});
 
-  async function loadUsers() {
-    const usersEl = document.getElementById('usersList');
-    if (!JSONBIN_CONFIG.apiKey || JSONBIN_CONFIG.apiKey === 'YOUR_JSONBIN_API_KEY_HERE') {
-      usersEl.innerHTML = `<div class="note-box" style="margin:0;">Set up your JSONBin config to see users here.</div>`;
+// ── REFRESH ──────────────────────────────────────────────
+window.refreshAll=async function(){
+  const btn=document.getElementById('refreshBtn');
+  btn.textContent='⏳ Refreshing…';
+  btn.disabled=true;
+  await loadStats();
+  await loadUsers();
+  renderPosts();
+  btn.textContent='✓ Done';
+  setTimeout(()=>{btn.textContent='↻ Refresh';btn.disabled=false;},1500);
+};
+
+// ── LOAD STATS ────────────────────────────────────────────
+async function loadStats(){
+  if(!JSONBIN_CONFIG.apiKey||JSONBIN_CONFIG.apiKey==='YOUR_JSONBIN_API_KEY_HERE'){
+    document.getElementById('totalVisitors').textContent='—';
+    document.getElementById('totalLikes').textContent='—';
+    return;
+  }
+  try{
+    const[vRes,lRes]=await Promise.all([
+      fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.visitorsBinId}/latest`,{headers:{'X-Master-Key':JSONBIN_CONFIG.apiKey}}),
+      fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.likesBinId}/latest`,{headers:{'X-Master-Key':JSONBIN_CONFIG.apiKey}})
+    ]);
+    const vData=await vRes.json();
+    const lData=await lRes.json();
+    document.getElementById('totalVisitors').textContent=(vData.record?.visitors||0).toLocaleString();
+    document.getElementById('totalLikes').textContent=Object.values(lData.record||{}).reduce((a,b)=>a+(b||0),0);
+  }catch(e){console.error(e);}
+}
+
+// ── LOAD USERS ────────────────────────────────────────────
+async function loadUsers(){
+  const el=document.getElementById('usersList');
+  if(!JSONBIN_CONFIG.apiKey||JSONBIN_CONFIG.apiKey==='YOUR_JSONBIN_API_KEY_HERE'){
+    el.innerHTML=`<div class="note-box" style="margin:0">Set up JSONBin config in blog-config.js to see users.</div>`;
+    return;
+  }
+  try{
+    const res=await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.usersBinId}/latest`,{headers:{'X-Master-Key':JSONBIN_CONFIG.apiKey}});
+    const data=await res.json();
+    allUsers=data.record?.users||[];
+    document.getElementById('totalUsers').textContent=allUsers.length;
+    if(!allUsers.length){
+      el.innerHTML=`<div class="empty">No users yet. When people sign up they'll appear here.</div>`;
       return;
     }
-    try {
-      const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_CONFIG.usersBinId}/latest`, { headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey } });
-      const data = await res.json();
-      allUsers = data.record?.users || [];
-      document.getElementById('totalUsers').textContent = allUsers.length;
-
-      if (allUsers.length === 0) {
-        usersEl.innerHTML = `<div class="empty-state">No users yet. When people sign up on your blog, they'll appear here automatically.</div>`;
-        return;
-      }
-
-      usersEl.innerHTML = `
-        <div class="users-table-wrap">
-          <table class="users-table">
+    // Show max 20 at a time with scroll
+    el.innerHTML=`
+      <div class="users-wrap">
+        <div class="users-scroll">
+          <table>
             <thead><tr><th>Name</th><th>Email</th><th>Signed up via</th><th>Date joined</th><th></th></tr></thead>
             <tbody>
-              ${allUsers.map(u => `
+              ${allUsers.slice(0,20).map(u=>`
                 <tr>
-                  <td><span class="user-avatar">${(u.name || u.email || '?')[0].toUpperCase()}</span>${u.name || '—'}</td>
-                  <td style="font-family:monospace;font-size:12px;color:#93c5fd;">${u.email}</td>
-                  <td><span class="provider-badge ${u.provider === 'google' ? 'provider-google' : 'provider-email'}">${u.provider === 'google' ? '🔵 Google' : '✉️ Email'}</span></td>
-                  <td style="color:#64748b;">${u.date ? new Date(u.date).toLocaleDateString('en-IN', {day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
-                  <td><button class="copy-btn" onclick="copyEmail('${u.email}')">Copy</button></td>
+                  <td><span class="uav">${(u.name||u.email||'?')[0].toUpperCase()}</span>${u.name||'—'}</td>
+                  <td style="font-family:monospace;font-size:12px;color:#93c5fd">${u.email}</td>
+                  <td><span class="pbadge ${u.provider==='google'?'pb-g':'pb-e'}">${u.provider==='google'?'🔵 Google':'✉️ Email'}</span></td>
+                  <td style="color:#64748b">${u.date?new Date(u.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—'}</td>
+                  <td><button class="cbtn" onclick="copyEmail('${u.email}')">Copy</button></td>
                 </tr>`).join('')}
             </tbody>
           </table>
-        </div>`;
-    } catch(e) {
-      usersEl.innerHTML = `<div class="empty-state">Could not load users. Check your JSONBin usersBinId in blog-config.js.</div>`;
-    }
+        </div>
+        ${allUsers.length>20?`<div style="padding:.75rem 1rem;font-size:12px;color:#64748b;border-top:1px solid #334155">Showing 20 of ${allUsers.length} users. Export CSV to see all.</div>`:''}
+      </div>`;
+  }catch(e){
+    el.innerHTML=`<div class="empty">Could not load users. Check JSONBin config.</div>`;
   }
+}
 
-  window.copyEmail = function(email) {
-    navigator.clipboard.writeText(email).then(() => showToast('Copied: ' + email));
-  };
-  window.copyAllEmails = function() {
-    if (!allUsers.length) { showToast('No users yet'); return; }
-    navigator.clipboard.writeText(allUsers.map(u => u.email).join(', ')).then(() => showToast(`Copied ${allUsers.length} emails!`));
-  };
+// ── RENDER POSTS ──────────────────────────────────────────
+window.renderPosts=function(){
+  const published=localPosts.filter(p=>!p.comingSoon);
+  document.getElementById('publishedCount').textContent=published.length;
+  document.getElementById('postList').innerHTML=localPosts.map((p,i)=>`
+    <div class="post-row">
+      <div class="post-row-left">
+        <div class="post-row-title">${p.icon} ${p.title}</div>
+        <div class="post-row-meta">${p.tags.join(' · ')}${p.date?' · '+p.date:''}</div>
+      </div>
+      <div class="post-row-actions">
+        ${p.comingSoon
+          ?`<span class="badge-soon">Coming soon</span>
+             <button class="btn btn-green btn-sm" onclick="publishPost(${i})">🚀 Publish</button>`
+          :`<span class="badge-live">Live</span>
+             <button class="btn btn-yellow btn-sm" onclick="unpublishPost(${i})">⬇ Unpublish</button>`
+        }
+        <button class="btn btn-ghost btn-sm" onclick="openEditModal(${i})">✏️ Edit</button>
+        <button class="btn btn-red btn-sm" onclick="deletePost(${i})">🗑</button>
+      </div>
+    </div>`).join('');
+};
 
-  function showToast(msg) {
-    const t = document.createElement('div');
-    t.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #334155;color:#f1f5f9;padding:10px 20px;border-radius:12px;font-size:13px;z-index:999;transition:opacity 0.3s;';
-    t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 2500);
-  }
+// ── PUBLISH / UNPUBLISH ───────────────────────────────────
+window.publishPost=function(i){
+  if(!confirm(`Publish "${localPosts[i].title}"?\n\nMake sure "${localPosts[i].file}" is already uploaded to GitHub, otherwise the link will be broken.`))return;
+  localPosts[i].comingSoon=false;
+  localPosts[i].date=new Date().toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+  savePosts();
+  renderPosts();
+  showToast('🚀 Post published! Update blog-config.js on GitHub too.');
+};
+
+window.unpublishPost=function(i){
+  if(!confirm('Move this post back to Coming Soon?'))return;
+  localPosts[i].comingSoon=true;
+  savePosts();
+  renderPosts();
+  showToast('Post moved back to Coming Soon.');
+};
+
+window.deletePost=function(i){
+  if(!confirm(`Delete "${localPosts[i].title}"? This only removes it from this view — delete the HTML file on GitHub manually too.`))return;
+  localPosts.splice(i,1);
+  savePosts();
+  renderPosts();
+  showToast('Post removed.');
+};
+
+// ── SAVE TO LOCALSTORAGE (syncs to homepage via shared storage) ─────────────
+function savePosts(){
+  localStorage.setItem('nk_posts',JSON.stringify(localPosts));
+  showConfigHint();
+}
+
+function showConfigHint(){
+  // Show which lines to update in blog-config.js
+  const hint=`
+    <div style="background:#1e293b;border:1px solid #334155;border-left:3px solid #fbbf24;border-radius:0 12px 12px 0;padding:1rem 1.25rem;font-size:13px;color:#94a3b8;line-height:1.7;margin-top:1rem" id="cfgHint">
+      <strong style="color:#fde68a">⚠️ One more step:</strong> Your changes are saved locally in this browser. To make them permanent on GitHub, copy the updated <code style="color:#93c5fd">BLOG_POSTS</code> array below and paste it into <code>blog-config.js</code> on GitHub:
+      <br><br>
+      <textarea readonly style="width:100%;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#a5f3fc;font-family:monospace;font-size:11px;padding:10px;min-height:160px;resize:vertical">${buildConfigExport()}</textarea>
+      <button class="btn btn-ghost btn-sm" style="margin-top:8px" onclick="navigator.clipboard.writeText(document.querySelector('#cfgHint textarea').value);showToast('Copied! Paste into blog-config.js on GitHub')">📋 Copy this code</button>
+    </div>`;
+  const existing=document.getElementById('cfgHint');
+  if(existing)existing.outerHTML=hint;
+  else document.getElementById('postList').insertAdjacentHTML('afterend',hint);
+}
+
+function buildConfigExport(){
+  return `const BLOG_POSTS = ${JSON.stringify(localPosts,null,2)};`;
+}
+
+// ── CREATE BLOG ───────────────────────────────────────────
+let cTags=[];
+window.openCreateModal=function(){cTags=[];renderCTags();document.getElementById('createModal').classList.add('show');};
+window.addCTag=function(){
+  const inp=document.getElementById('c-tag-inp');
+  const v=inp.value.trim();
+  if(v&&!cTags.includes(v)){cTags.push(v);renderCTags();}
+  inp.value='';inp.focus();
+};
+function renderCTags(){
+  document.getElementById('c-tags-list').innerHTML=cTags.map((t,i)=>
+    `<span class="edit-tag">${t}<button onclick="cTags.splice(${i},1);renderCTags()">×</button></span>`).join('');
+}
+window.renderCTags=renderCTags;
+
+window.submitCreateBlog=function(){
+  const title=document.getElementById('c-title').value.trim();
+  const excerpt=document.getElementById('c-excerpt').value.trim();
+  const file=document.getElementById('c-file').value.trim();
+  if(!title||!excerpt||!file){showToast('Please fill in title, excerpt and filename.');return;}
+  const newPost={
+    id:file.replace('.html',''),
+    title,excerpt,file,
+    tags:cTags.length?cTags:['Education'],
+    icon:document.getElementById('c-icon').value.trim()||'📝',
+    color:'#3182ce',
+    featured:false,
+    comingSoon:true,
+    date:''
+  };
+  localPosts.push(newPost);
+  savePosts();
+  renderPosts();
+  closeModal('createModal');
+  document.getElementById('c-title').value='';
+  document.getElementById('c-excerpt').value='';
+  document.getElementById('c-file').value='';
+  document.getElementById('c-icon').value='';
+  document.getElementById('c-readtime').value='';
+  cTags=[];
+  showToast('✅ Blog added to Coming Soon! Upload the HTML file to GitHub when ready.');
+};
+
+// ── EDIT BLOG ─────────────────────────────────────────────
+let eTags=[];
+window.openEditModal=function(i){
+  const p=localPosts[i];
+  document.getElementById('e-id').value=i;
+  document.getElementById('e-title').value=p.title;
+  document.getElementById('e-excerpt').value=p.excerpt;
+  document.getElementById('e-icon').value=p.icon;
+  document.getElementById('e-file').value=p.file;
+  document.getElementById('e-readtime').value=p.readTime||'';
+  eTags=[...p.tags];
+  renderETags();
+  document.getElementById('editModal').classList.add('show');
+};
+
+window.addETag=function(){
+  const inp=document.getElementById('e-tag-inp');
+  const v=inp.value.trim();
+  if(v&&!eTags.includes(v)){eTags.push(v);renderETags();}
+  inp.value='';inp.focus();
+};
+function renderETags(){
+  document.getElementById('e-tags-list').innerHTML=eTags.map((t,i)=>
+    `<span class="edit-tag">${t}<button onclick="eTags.splice(${i},1);renderETags()">×</button></span>`).join('');
+}
+window.renderETags=renderETags;
+
+window.submitEditBlog=function(){
+  const i=parseInt(document.getElementById('e-id').value);
+  localPosts[i]={
+    ...localPosts[i],
+    title:document.getElementById('e-title').value.trim(),
+    excerpt:document.getElementById('e-excerpt').value.trim(),
+    icon:document.getElementById('e-icon').value.trim()||localPosts[i].icon,
+    file:document.getElementById('e-file').value.trim(),
+    tags:eTags.length?eTags:localPosts[i].tags,
+    readTime:document.getElementById('e-readtime').value.trim()
+  };
+  savePosts();
+  renderPosts();
+  closeModal('editModal');
+  showToast('✅ Changes saved!');
+};
+
+// ── COPY / EXPORT ─────────────────────────────────────────
+window.copyEmail=function(email){
+  navigator.clipboard.writeText(email).then(()=>showToast('Copied: '+email));
+};
+window.copyAllEmails=function(){
+  if(!allUsers.length){showToast('No users yet.');return;}
+  navigator.clipboard.writeText(allUsers.map(u=>u.email).join(', ')).then(()=>showToast(`Copied ${allUsers.length} emails!`));
+};
+window.exportToCSV=function(){
+  if(!allUsers.length){showToast('No users to export.');return;}
+  const rows=[['Name','Email','Signed Up Via','Date Joined'],...allUsers.map(u=>[
+    u.name||'',u.email,u.provider||'',
+    u.date?new Date(u.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):''
+  ])];
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='nikhilkhot_blog_subscribers_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.click();
+  showToast('✅ CSV downloaded! Open in Excel or Google Sheets.');
+};
+
+// ── MODAL HELPERS ─────────────────────────────────────────
+window.closeModal=function(id){document.getElementById(id).classList.remove('show');};
+document.querySelectorAll('.overlay').forEach(el=>{
+  el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('show');});
+});
+
+// ── TOAST ─────────────────────────────────────────────────
+window.showToast=function(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+};
+
+// ── LOAD SAVED POSTS FROM LOCALSTORAGE ────────────────────
+const saved=localStorage.getItem('nk_posts');
+if(saved){try{localPosts=JSON.parse(saved);}catch(e){}}
+</script>
+
+<script>
+// INDEX.HTML also reads localStorage to show updated posts
+// This small bridge updates the homepage posts dynamically
 </script>
 </body>
 </html>
